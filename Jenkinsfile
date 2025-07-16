@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         TARGET_HOST = "ubuntu@13.53.182.90"
-        APP_DIR = "/home/ubuntu/fastapi-app"
+        APP_DIR = "/home/ubuntu/"
     }
 
     stages {
@@ -45,13 +45,13 @@ stage('Install Dependencies & Start FastAPI Server') {
                     fi &&
 
                     echo "[4] Install Python dependencies..." &&
-                    poetry install --no-root --directory /home/ubuntu/fastapi-app/apis &&
+                    poetry install --no-root --directory /home/ubuntu/apis &&
 
                     echo "[5] Kill previous Uvicorn process (if any)..." &&
                     pkill -f "uvicorn" || true &&
 
                     echo "[6] Start FastAPI server in background..." &&
-                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/fastapi-app/apis run uvicorn apis.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/apis run uvicorn apis.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
                 '
             """
         }
