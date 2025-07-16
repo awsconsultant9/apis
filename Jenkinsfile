@@ -4,7 +4,7 @@ pipeline {
     environment {
         TARGET_HOST = "ubuntu@13.53.182.90"
         APP_DIR = "/home/ubuntu/fastapi-app"
-        SSH_KEY = "~/.ssh/id_rsa"  // Replace with correct path on EC2-A
+        SSH_KEY = "/home/ubuntu/.ssh/id_rsa"  // Replace with correct path on EC2-A
     }
 
     stages {
