@@ -51,7 +51,7 @@ stage('Install Dependencies & Start FastAPI Server') {
                     pkill -f "uvicorn" || true &&
 
                     echo "[6] Start FastAPI server in background..." &&
-                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/fastapi-app/apis run uvicorn apis.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/fastapi-app/apis run uvicorn main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
                 '
             """
         }
