@@ -11,7 +11,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/awsconsultant9/apis.git'
+                git branch: 'main', url: 'https://github.com/awsconsultant9/apis.git'
             }
         }
 
