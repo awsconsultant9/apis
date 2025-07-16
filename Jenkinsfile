@@ -33,7 +33,7 @@ stage('Install Dependencies & Start FastAPI Server') {
         sshagent(['ec2-bapp-key']) {
             sh """
                 ssh -o StrictHostKeyChecking=no \$TARGET_HOST '
-                    cd \$APP_DIR &&
+                    cd \$APP_DIR\apis &&
 
                     echo "[3] Install Poetry if not present..." &&
                     if ! command -v poetry &> /dev/null; then
@@ -51,7 +51,7 @@ stage('Install Dependencies & Start FastAPI Server') {
                     pkill -f "uvicorn" || true &&
 
                     echo "[6] Start FastAPI server in background..." &&
-                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/fastapi-app/apis run uvicorn apis.apis.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+                    /usr/bin/nohup /usr/bin/poetry --directory /home/ubuntu/fastapi-app/apis run uvicorn apis.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
                 '
             """
         }
