@@ -77,7 +77,7 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 async def test():
     raise HTTPException(status_code=429, detail="Too many requests")
 
-""'
+"""
 
 
 
