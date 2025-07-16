@@ -4,11 +4,11 @@ from fastapi import FastAPI, Depends, Request, HTTPException
 
 from fastapi.responses import JSONResponse
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
-from .db.database import SessionLocal, engine, Base
-from .db.models import User
-from redis import Redis
+# from sqlalchemy.ext.asyncio import AsyncSession
+# from sqlalchemy import text
+# from .db.database import SessionLocal, engine, Base
+# from .db.models import User
+# from redis import Redis
 
 '''
 redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
@@ -77,4 +77,11 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 async def test():
     raise HTTPException(status_code=429, detail="Too many requests")
 
-'''
+///
+
+
+
+
+@app.get("/ph")
+def read_root():
+    return {"message": "Hello, FastAPI with Poetrpy!"}
