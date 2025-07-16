@@ -45,7 +45,7 @@ pipeline {
                         fi
 
                         echo "[4] Install Python dependencies..."
-                        poetry install --no-root
+                        poetry install --no-root --directory /home/ubuntu/fastapi-app/apis
 
                         echo "[5] Kill previous Uvicorn process (if any)..."
                         pkill -f "uvicorn" || true
