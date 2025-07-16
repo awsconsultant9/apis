@@ -31,7 +31,7 @@ pipeline {
         stage('Install Dependencies & Start FastAPI Server') {
             steps {
                 sshagent(['ec2-bapp-key']) {
-                    sh '''
+                    sh """
                     ssh -o StrictHostKeyChecking=no $TARGET_HOST << 'EOF'
                         cd $APP_DIR
 
@@ -53,7 +53,7 @@ pipeline {
                         echo "[6] Start FastAPI server in background..."
                         nohup poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
                     EOF
-                    '''
+                    """
                 }
             }
         }
