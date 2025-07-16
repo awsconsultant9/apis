@@ -36,13 +36,13 @@ stage('Install Dependencies & Start FastAPI Server') {
                     cd \$APP_DIR &&
 
                     echo "[3] Install Poetry if not present..." &&
-                    if ! command -v poetry &> /dev/null; then
-                        curl -sSL https://install.python-poetry.org | python3 - &&
-                        echo "export PATH=\\\$HOME/.local/bin:\\\$PATH" >> ~/.bashrc &&
-                        export PATH=\\\$HOME/.local/bin:\\\$PATH
-                    else
-                        export PATH=\\\$HOME/.local/bin:\\\$PATH
-                    fi &&
+                    // if ! command -v poetry &> /dev/null; then
+                       // curl -sSL https://install.python-poetry.org | python3 - &&
+                       // echo "export PATH=\\\$HOME/.local/bin:\\\$PATH" >> ~/.bashrc &&
+                        //export PATH=\\\$HOME/.local/bin:\\\$PATH
+                    //else
+                      //  export PATH=\\\$HOME/.local/bin:\\\$PATH
+                    // fi &&
 
                     echo "[4] Install Python dependencies..." &&
                     poetry install --no-root --directory /home/ubuntu/apis &&
