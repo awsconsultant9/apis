@@ -10,6 +10,7 @@ from .db.database import SessionLocal, engine, Base
 from .db.models import User
 from redis import Redis
 
+'''
 redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
 RATE_LIMIT = 5
 TIME_WINDOW = 60
@@ -39,14 +40,14 @@ async def rate_limiter(request: Request, call_next):
     return response
 
 
-
+///
 
 
 
 @app.get("/p")
 def read_root():
     return {"message": "Hello, FastAPI with Poetry!"}
-
+///
 
 @app.get("/item/{item}")
 def get_item(item):
@@ -75,3 +76,5 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 @app.get("/test429")
 async def test():
     raise HTTPException(status_code=429, detail="Too many requests")
+
+'''
