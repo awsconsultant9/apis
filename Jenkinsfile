@@ -28,32 +28,32 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies & Start FastAPI Server') {
-            steps {
-                sshagent(['ec2-bapp-key']) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no $TARGET_HOST << 'EOF'
-                        cd $APP_DIR
+stage('Install Dependencies & Start FastAPI Server') {
+    steps {
+        sshagent(['ec2-bapp-key']) {
+            sh """
+                ssh -o StrictHostKeyChecking=no \$TARGET_HOST << 'EOF'
+                    cd \$APP_DIR
 
-                        echo "[3] Install Poetry if not present..."
-                        if ! command -v poetry &> /dev/null; then
-                            curl -sSL https://install.python-poetry.org | python3 -
-                            echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-                            export PATH="$HOME/.local/bin:$PATH"
-                        else
-                            export PATH="$HOME/.local/bin:$PATH"
-                        fi
+                    echo "[3] Install Poetry if not present..."
+                    if ! command -v poetry &> /dev/null; then
+                        curl -sSL https://install.python-poetry.org | python3 -
+                        echo 'export PATH="\$HOME/.local/bin:\$PATH"' >> ~/.bashrc
+                        export PATH="\$HOME/.local/bin:\$PATH"
+                    else
+                        export PATH="\$HOME/.local/bin:\$PATH"
+                    fi
 
-                        echo "[4] Install Python dependencies..."
-                        poetry install --no-root --directory /home/ubuntu/fastapi-app/apis
+                    echo "[4] Install Python dependencies..."
+                    poetry install --no-root --directory /home/ubuntu/fastapi-app/apis
 
-                        echo "[5] Kill previous Uvicorn process (if any)..."
-                        pkill -f "uvicorn" || true
+                    echo "[5] Kill previous Uvicorn process (if any)..."
+                    pkill -f "uvicorn" || true
 
-                        echo "[6] Start FastAPI server in background..."
-                        nohup poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
-                    EOF
-                    """
+                    echo "[6] Start FastAPI server in background..."
+                    nohup poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+                EOF
+            """
                 }
             }
         }
