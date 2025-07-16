@@ -40,14 +40,14 @@ async def rate_limiter(request: Request, call_next):
     return response
 
 
-///
+
 
 
 
 @app.get("/p")
 def read_root():
     return {"message": "Hello, FastAPI with Poetry!"}
-///
+
 
 @app.get("/item/{item}")
 def get_item(item):
