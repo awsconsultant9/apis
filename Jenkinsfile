@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sshagent(['ec2-bapp-key']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no $TARGET_HOST << EOF
+                    ssh -o StrictHostKeyChecking=no $TARGET_HOST << 'EOF'
                         cd $APP_DIR
 
                         echo "[3] Install Poetry if not present..."
