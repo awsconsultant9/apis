@@ -35,8 +35,6 @@ stage('Install Dependencies & Start FastAPI Server') {
                 ssh -o StrictHostKeyChecking=no \$TARGET_HOST '
                     cd \$APP_DIR &&
 
-                    echo "[3] Install Poetry if not present..." &&
-
                     echo "[4] Install Python dependencies..." &&
                     poetry install --no-root --directory /home/ubuntu/apis &&
 
