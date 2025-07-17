@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TARGET_HOST = "ubuntu@13.53.182.90"
+        TARGET_HOST = "ubuntu@13.62.19.114"
         APP_DIR = "/home/ubuntu/"
     }
 
