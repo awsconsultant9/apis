@@ -4,15 +4,15 @@ from fastapi import FastAPI, Depends, Request, HTTPException
 
 from fastapi.responses import JSONResponse
 
-# from sqlalchemy.ext.asyncio import AsyncSession
-# from sqlalchemy import text
-# from .db.database import SessionLocal, engine, Base
-# from .db.models import User
-# from redis import Redis
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
+from .db.database import SessionLocal, engine, Base
+from .db.models import User
+from redis import Redis
 app = FastAPI()
-"""
+
 redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
-RATE_LIMIT = 5
+RATE_LIMIT = 5000
 TIME_WINDOW = 60
 app = FastAPI()
 
@@ -39,12 +39,7 @@ async def rate_limiter(request: Request, call_next):
     response = await call_next(request)
     return response
 
-
-
-
-
-
-@app.get("/p")
+@app.get("/")
 def read_root():
     return {"message": "Hello, FastAPI with Poetry!"}
 
@@ -65,7 +60,7 @@ async def get_db():
     async with SessionLocal() as session:
         yield session
 
-@app.get("/")
+@app.get("/root")
 async def read_users(db: AsyncSession = Depends(get_db)):
     result = await db.execute(text("SELECT * FROM users"))
     rows = result.fetchall()
@@ -76,10 +71,6 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 @app.get("/test429")
 async def test():
     raise HTTPException(status_code=429, detail="Too many requests")
-
-"""
-
-
 
 
 @app.get("/ph")
