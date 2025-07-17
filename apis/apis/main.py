@@ -84,4 +84,4 @@ async def test():
 
 @app.get("/ph")
 def read_root():
-    return {"message": "Hello, FastAPI with Poetrpy!"}
+    return {"message": "Hello, FastAPI with Poetrpyphanee!"}
