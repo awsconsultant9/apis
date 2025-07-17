@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from .db.database import SessionLocal, engine, Base
-from .db.models import User
+from .db.models import User, Event
 from redis import Redis
 app = FastAPI()
 
@@ -18,6 +18,10 @@ app = FastAPI()
 
 def get_ip_client(request):
     return request.client.host
+
+@app.post("/eventprocessor")
+async def event_processor(event: Event):
+    return {"eventname": event.event_name, "eventstatus": event.event_status, "eventvalid": event.valid}
 
 
 @app.middleware("http")
