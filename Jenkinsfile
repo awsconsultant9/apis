@@ -33,7 +33,7 @@ stage('Install Dependencies & Start FastAPI Server') {
         sshagent(['ec2-bapp-key']) {
             sh """
                 ssh -o StrictHostKeyChecking=no \$TARGET_HOST '
-                    cd \$APP_DIR/apis &&
+                    cd \$APP_DIR &&
                      export PATH="\$HOME/.local/bin:\$PATH" &&
 
                     echo "[4] Install Python dependencies..." &&
