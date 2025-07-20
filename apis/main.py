@@ -6,8 +6,9 @@ from fastapi.responses import JSONResponse
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from .db.database import SessionLocal, engine, Base, add_user
-from .pymodels.models import User, Event
+from db.database import SessionLocal, engine, insert_user
+from db.base import Base
+from pymodels.models import User, Event
 from redis import Redis
 app = FastAPI()
 
@@ -39,19 +40,10 @@ async def rate_limiter(request: Request, call_next):
             status_code=429,
             content={"detail": f"Throttled, too many requests try after {ttl} seconds"}
         )
-
+    print("forwarding the request")
     response = await call_next(request)
+    print("getting the request")
     return response
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, FastAPI with Poetry!"}
-
-
-@app.get("/item/{item}")
-def get_item(item):
-    return (f"string is returned {item}")
-
 
 # Create DB tables on startup
 @app.on_event("startup")
@@ -59,35 +51,12 @@ async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-# Dependency to get DB session
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-@app.get("/root")
-async def read_users(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(text("SELECT * FROM users"))
-    rows = result.fetchall()
-    columns = result.keys()
-    users = [dict(zip(columns, row)) for row in rows]
-    return users
-
-@app.get("/test429")
-async def test():
-    raise HTTPException(status_code=429, detail="Too many requests")
-
-
-@app.get("/ph")
-def read_root():
-    return {"message": "Hello, FastAPI with Poetrpyphanee!"}
-
 # to push the record you need session object
 
 @app.post("/user")
 async def add_user(user: User):
     # the  user from request is json , fast api converted to pydantic model
     user_data = user.dict()
-    db_user = DbUser(**user_data)
-    return add_user(db_user)
+    return await insert_user(user_data)
 
 
