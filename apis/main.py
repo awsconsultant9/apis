@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from .db.database import SessionLocal, engine, Base
-from .db.models import User, Event
+from .db.database import SessionLocal, engine, Base, add_user
+from .pymodels.models import User, Event
 from redis import Redis
 app = FastAPI()
 
@@ -80,3 +80,14 @@ async def test():
 @app.get("/ph")
 def read_root():
     return {"message": "Hello, FastAPI with Poetrpyphanee!"}
+
+# to push the record you need session object
+
+@app.post("/user")
+async def add_user(user: User):
+    # the  user from request is json , fast api converted to pydantic model
+    user_data = user.dict()
+    db_user = DbUser(**user_data)
+    return add_user(db_user)
+
+
